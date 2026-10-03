@@ -6,15 +6,8 @@
 #include <complex>
 #include <iostream>
 #include <iomanip>
-
-// ============================================
-// SimulationResult Class
-// ============================================
-// Stores the result of one frequency point analysis
-// Each result holds:
-//   - The frequency
-//   - Component name
-//   - Its impedance at that frequency (magnitude + phase)
+#include <cmath>
+using namespace std;
 
 struct ComponentResult {
     string name;
@@ -27,20 +20,14 @@ struct ComponentResult {
     }
 
     double getPhase() const {
-        return arg(impedance) * 180.0 / M_PI;  // in degrees
+        return arg(impedance) * 180.0 / M_PI;
     }
 };
-
-// ============================================
-// SimulationResult Class
-// ============================================
-// Holds ALL results across ALL frequencies
-// for a complete analysis run
 
 class SimulationResult {
 private:
     vector<ComponentResult> results;
-    string analysisType;  // "DC" or "AC"
+    string analysisType;
 
 public:
     SimulationResult(string type) : analysisType(type) {}
@@ -57,7 +44,6 @@ public:
         return analysisType;
     }
 
-    // Print results to console in a clean table
     void printResults() const {
         cout << "\n========================================" << endl;
         cout << "   " << analysisType << " Analysis Results" << endl;
