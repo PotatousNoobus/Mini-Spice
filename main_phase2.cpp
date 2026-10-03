@@ -15,14 +15,12 @@ int main() {
         std::cout << "        MiniSPICE - Full Demo           " << std::endl;
         std::cout << "========================================" << std::endl;
 
-        // Build the Circuit
-        // Simple RLC circuit:
-        //   V1 (5V DC source) between node 1 and ground
-        //   R1 (1kΩ)          between node 1 and node 2
-        //   L1 (10mH)         between node 2 and node 3
-        //   C1 (1µF)          between node 3 and ground
-
-        Circuit myCircuit(4);  // 4 nodes: 0(ground), 1, 2, 3
+        // Build Circuit
+        // V1 (5V DC)  - node 1 to ground
+        // R1 (1kΩ)    - node 1 to node 2
+        // L1 (10mH)   - node 2 to node 3
+        // C1 (1µF)    - node 3 to ground
+        Circuit myCircuit(4);
 
         myCircuit.addComponent(std::make_unique<VoltageSource>("V1", 1, 0, 5.0));
         myCircuit.addComponent(std::make_unique<Resistor>("R1", 1, 2, 1000.0));
@@ -36,7 +34,7 @@ int main() {
         SimulationResult dcResult = dc.run(myCircuit);
         dcResult.printResults();
 
-        // AC Analysis (1Hz to 100kHz, 20 points)
+        // AC Analysis
         ACAnalysis ac(1.0, 100000.0, 20);
         SimulationResult acResult = ac.run(myCircuit);
         acResult.printResults();
